@@ -17,26 +17,55 @@ public class ParenthesesChecker {
             return true;
         }
 
-        Stack<String> stackOfCharacters = new Stack<String>();
+        Stack<String> stackOfNormal = new Stack<String>();
+        Stack<String> stackOfSquare = new Stack<String>();
+        Stack<String> stackOfCurly = new Stack<String>();
+        Stack<String> stackOfAngle = new Stack<String>();
 
         for (int i = 0; i < testString.length() ; i++) {
             String character = String.valueOf(testString.charAt(i));
-            if (character.equals("(")){
-                stackOfCharacters.add(character);
+            if (character.equals("(")) {
+                stackOfNormal.add(character);
+            } else if (character.equals("[")) {
+                stackOfSquare.add(character);
+            } else if (character.equals("{")) {
+                stackOfCurly.add(character);
+            } else if (character.equals("<")) {
+                stackOfAngle.add(character);
             } else if (character.equals(")")) {
-                if (stackOfCharacters.isEmpty()){
+                if (stackOfNormal.isEmpty()) {
                     return false;
-                }else {
-                    stackOfCharacters.pop();
+                } else {
+                    stackOfNormal.pop();
+                }
+            } else if (character.equals("]")) {
+                if (stackOfSquare.isEmpty()) {
+                    return false;
+                } else {
+                    stackOfSquare.pop();
+                }
+            } else if (character.equals("}")) {
+                if (stackOfCurly.isEmpty()) {
+                    return false;
+                } else {
+                    stackOfCurly.pop();
+                }
+
+            } else if (character.equals(">")) {
+                if (stackOfAngle.isEmpty()) {
+                    return false;
+                } else {
+                    stackOfAngle.pop();
                 }
             }
-            }
+        }
 
-        if (stackOfCharacters.isEmpty()){
+        if (stackOfNormal.isEmpty() && stackOfSquare.isEmpty() && stackOfAngle.isEmpty() && stackOfCurly.isEmpty() ) {
             return true;
         } else {
             return false;
         }
+
 
 
     }
